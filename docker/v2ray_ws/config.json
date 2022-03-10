@@ -1,0 +1,53 @@
+{
+    "log": {
+		"loglevel": "none"
+    },
+    "inbounds": [
+		{
+			"sniffing": {
+				"enabled": true,
+				"destOverride": [
+					"http",
+					"tls"
+				]
+			},
+			"port": "10808",
+			"listen": "0.0.0.0",
+			"domainOverride": ["http", "tls"],
+			"protocol": "vmess",
+			"settings": {
+				"clients": [
+					{
+						"id": "0fd36365-2d5d-45c9-a5dc-6bba190cd536"
+					}
+				]
+			},
+			"streamSettings": {
+				"network": "ws"
+			}
+		}
+    ],
+    "outbounds": [
+		{
+			"protocol": "freedom",
+			"settings": {}
+		},
+		{
+			"protocol": "blackhole",
+			"settings": {},
+			"tag": "block"
+		}
+    ],
+    "routing": {
+		"domainStrategy": "AsIs",
+		"rules": [
+			{
+				"type": "field",
+				"outboundTag": "block",
+				"protocol": [
+					"bittorrent"
+				]
+			}
+		]
+    }
+}

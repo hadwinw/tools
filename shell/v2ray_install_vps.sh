@@ -91,6 +91,7 @@ v2ray_config(){
 EOF
 
 	systemctl restart v2ray
+	systemctl enable v2ray
 }
 
 
@@ -139,6 +140,7 @@ https://$domain {
 EOF
 
     systemctl restart caddy
+	systemctl enable caddy
 }
 
 
