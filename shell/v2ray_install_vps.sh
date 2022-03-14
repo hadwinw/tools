@@ -24,8 +24,12 @@ function deps_install(){
 }
 
 function v2ray_install(){
+	useradd -r -M -s `which nologin` v2ray
 	bash <(curl -L https://raw.githubusercontents.com/v2fly/fhs-install-v2ray/master/install-release.sh)
     bash <(curl -L https://raw.githubusercontents.com/v2fly/fhs-install-v2ray/master/install-dat-release.sh)
+	sed -i 's@User=nobody@User=v2ray@g' /etc/systemd/system/v2ray.service
+	sed -i 's@User=nobody@User=v2ray@g' /etc/systemd/system/v2ray@.service
+	systemctl daemon-reload
 }
 
 
@@ -89,7 +93,7 @@ v2ray_config(){
 }
 
 EOF
-
+	
 	systemctl restart v2ray
 	systemctl enable v2ray
 }
@@ -142,9 +146,6 @@ EOF
     systemctl restart caddy
 	systemctl enable caddy
 }
-
-
-
 
 
 deps_install

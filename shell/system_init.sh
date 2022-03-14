@@ -57,6 +57,8 @@ function disable_log(){
 		yum erase -y rsyslog*
 	else
 		apt purge -y rsyslog*
+		sed -i 's@#Storage=auto@Storage=none@g' /etc/systemd/journald.conf
+		systemctl restart systemd-journald.service
 	fi
 	rm -rf /var/log/*
 }
