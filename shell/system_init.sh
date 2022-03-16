@@ -49,6 +49,20 @@ EOF
 }
 
 
+function emacs_init(){
+	if [ ! -d $HOME/.emacs.d ];then
+		mkdir -p $HOME/.emacs.d
+	fi
+	cat > $HOME/.emacs.d/init.el <<EOF
+(defalias 'yes-or-no-p 'y-or-n-p)
+(global-display-line-numbers-mode t)
+(column-number-mode 1)
+(setq make-backup-files nil)
+
+EOF
+}
+
+
 ###关闭rsyslog和systemd-journald.service日志功能
 function disable_log(){
 	systemctl stop rsyslog
@@ -88,4 +102,5 @@ fi
 
 sshd_reset
 bbr_start
+emacs_init
 #disable_log
