@@ -68,15 +68,25 @@ function disable_log(){
 	systemctl stop rsyslog
 	systemctl disable rsyslog
 	if [ $OS = 'centos_like' ];then
-		yum erase -y rsyslog*
+		yum erase -y rsyslog* logrotate
 	else
-		apt purge -y rsyslog*
+		apt purge -y rsyslog* logrotate
 		sed -i 's@#Storage=auto@Storage=none@g' /etc/systemd/journald.conf
 		systemctl restart systemd-journald.service
 	fi
 	rm -rf /var/log/*
 }
 
+
+function remove_pkg(){
+
+	if [ $OS = 'centos_like' ];then
+		yum earse -y man-db
+	else
+		apt purge -y man-db
+		apt autopurge -y
+	fi
+}
 
 
 [ $(id -u) != "0" ] && { echo "${CFAILURE}Error: 脚本必须使用root权限${CEND}"; exit 1; }
@@ -104,3 +114,4 @@ sshd_reset
 bbr_start
 emacs_init
 #disable_log
+remove_pkg
