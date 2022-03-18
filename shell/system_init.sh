@@ -90,7 +90,7 @@ function remove_pkg(){
 
 
 [ $(id -u) != "0" ] && { echo "${CFAILURE}Error: 脚本必须使用root权限${CEND}"; exit 1; }
-
+[ $1 = "" ] && echo "请为主机设置一个主机名，用法$0 HOSTNAME" && exit 1
 
 if [ -f /etc/redhat-release ];then
 	OS='centos_like'
