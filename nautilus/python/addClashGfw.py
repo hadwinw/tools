@@ -49,7 +49,7 @@ gfw_file_point.close()
 
 
 for gfw_domain in gfw_domains:
-    clash_config_lines.insert(-2,gfw_domain)
+    clash_config_lines.insert(-3,gfw_domain)
 
 
 '''重新写入clash的config.yaml文件中'''
