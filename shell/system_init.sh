@@ -81,9 +81,9 @@ function disable_log(){
 function remove_pkg(){
 
 	if [ $OS = 'centos_like' ];then
-		yum earse -y man-db
+		yum earse -y man-db exim4* vim vim-common vim-tiny
 	else
-		apt purge -y man-db
+		apt purge -y man-db exim4* vim vim-common vim-tiny
 		apt autopurge -y
 	fi
 }
