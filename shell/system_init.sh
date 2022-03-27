@@ -69,6 +69,7 @@ function disable_log(){
 	systemctl disable rsyslog
 	if [ $OS = 'centos_like' ];then
 		yum erase -y rsyslog* logrotate
+		### 暂时缺少centos版本噶journald关闭
 	else
 		apt purge -y rsyslog* logrotate
 		sed -i 's@#Storage=auto@Storage=none@g' /etc/systemd/journald.conf
@@ -113,5 +114,5 @@ fi
 sshd_reset
 bbr_start
 emacs_init
-#disable_log
+disable_log
 remove_pkg

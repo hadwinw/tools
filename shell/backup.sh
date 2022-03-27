@@ -8,7 +8,7 @@ backup_date=`date '+%Y%m%d'`
 
 # 修改为需要备份的目录路径和文件路径
 backup_paths=('/etc/caddy' '/usr/share/caddy' '/etc/php' '/etc/mysql' \
-						   '/etc/mopidy/mopidy.conf' '/etc/icecast2' '/etc/default/icecast2' \
+						   '/etc/mopidy/mopidy.conf' '/etc/icecast2' '/etc/default/icecast2' '/etc/init.d/icecast2' \
 						   '/etc/systemd/system/v2ray.service' '/usr/local/etc/v2ray' \
 						   '/etc/systemd/system/xray.service' '/usr/local/etc/xray' \
 						   '/etc/systemd/system/trojan-go.service' '/usr/loca/etc/trojan' \
@@ -17,7 +17,9 @@ backup_paths=('/etc/caddy' '/usr/share/caddy' '/etc/php' '/etc/mysql' \
 						   '/etc/ssh/sshd_config' '/etc/ssh/ssh_config' \
 						   '/etc/jellyfin' '/var/lib/jellyfin' \
 						   '/etc/sysctl.conf' \
-						   '/etc/ipsec.conf' '/etc/ipsec.secrets'
+						   '/etc/ipsec.conf' '/etc/ipsec.secrets' \
+						   '/var/spool/cron/crontabs' \
+						   '/var/lib/pagermaid' '/etc/systemd/system/pagermaid.service'
 			 )
 
 file_dir_exits(){
@@ -42,7 +44,7 @@ function mysql_backup(){
 }
 
 function iptables_backup(){
-	
+	echo "暂缺"
 }
 
 
