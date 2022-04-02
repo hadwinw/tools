@@ -1,9 +1,20 @@
 #!/usr/bin/bash
 #[ -f init.sh ] && source init.sh || { echo "init.sh不存在，程序退出" ; exit 1; }
-[ -z $1 ] &&  echo "$(_red "The script need a domain for caddy, eg: "$0 DOMAIN"")" && exit 1;
+
+
+
+if [ -f $tempdir/system_info.sh ] ;then
+	source $tempdir/system_info.sh
+else
+	curl -sL https://gitlab.com/hadwinw/tools/-/raw/main/shell/system_info.sh  -o $tempdir/system_info.sh && source $tempdir/system_info.sh
+fi
+
+
+[ -z $1 ] &&  echo "$(_red "The script need a domain for caddy, eg: "$0 DOMAIN"")" && exit 1
 domain=$1
 
 function deps_install(){
+	pkg_method
 	if [ $os_like = 'rhel' ];then
 		$pkg_install curl emacs-nox  yum-plugin-copr tree
 	elif [ $os_like = 'debian' ];then
@@ -198,6 +209,7 @@ EOF
 
 
 caddy_install(){
+	pkg_method
 	if [ $os_like = 'rhel' ];then
 		yum copr -y enable @caddy/caddy
 		$pkg_install caddy
