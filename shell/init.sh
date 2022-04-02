@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-[ $(id -u) != "0" ] && { echo "$(_red 你当前不是以root权限执行,请以root权限执行脚本)"; exit 1; }
+
 
 #### 定义输出颜色，github上炒回来的
 _red() {
@@ -18,6 +18,9 @@ _yellow() {
 _blue() {
     printf '\033[0;31;36m%b\033[0m' "$1"
 }
+
+[ $(id -u) != "0" ] && { echo "$(_red 你当前不是以root权限执行,请以root权限执行脚本)"; exit 1; }
+
 
 function baisc_system_info(){
 	cpu_name=$( awk -F: '/model name/ {name=$2} END {print name}' /proc/cpuinfo | sed 's/^[ \t]*//;s/[ \t]*$//' )
@@ -71,8 +74,9 @@ function pkg_method(){
 	fi
 }
 
-functoin dependence(){
-	pkg_method $1
+function dependence(){
+	pkg_method
+	pkg_install $1
 }
 
 
