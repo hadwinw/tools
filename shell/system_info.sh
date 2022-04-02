@@ -44,7 +44,7 @@ function os_get(){
 	[ -f /etc/lsb-release ] && awk -F'[="]+' '/DESCRIPTION/{print $2}' /etc/lsb-release && return
 }
 function os_like_get(){
-	[ -f /etc/os-release ] && os_like=`awk -F'[= "]' '/^ID/{print $2}' /etc/os-release`
+	[ -f /etc/os-release ] && os_like=`awk -F'[= "]' '/^ID=/{print $2}' /etc/os-release`
 	if [ $os_like = 'debian' ] ;then
 		echo $os_like
 	else 
