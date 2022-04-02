@@ -35,7 +35,7 @@ EOF
 
 
 function bbr_start(){
-	if [ $OS = 'centos_like' -a $OS_VERSION = '7' ];then
+	if [ $os_like = 'rhel' -a $os_version = '7' ];then
 		yum install -y wget
 		wget --no-check-certificate https://raw.githubusercontents.com/teddysun/across/master/bbr.sh && chmod +x bbr.sh && ./bbr.sh
 	else
@@ -67,7 +67,7 @@ EOF
 function disable_log(){
 	systemctl stop rsyslog
 	systemctl disable rsyslog
-	if [ $OS = 'centos_like' ];then
+	if [ $os_like = 'rhel' ];then
 		yum erase -y rsyslog* logrotate
 		### 暂时缺少centos版本噶journald关闭
 	else
@@ -80,8 +80,7 @@ function disable_log(){
 
 
 function remove_pkg(){
-
-	if [ $OS = 'centos_like' ];then
+	if [ $os_like = 'rhel' ];then
 		yum earse -y man-db exim4* vim vim-common vim-tiny
 	else
 		apt purge -y man-db exim4* vim vim-common vim-tiny
@@ -90,26 +89,9 @@ function remove_pkg(){
 }
 
 
-[ $(id -u) != "0" ] && { echo "${CFAILURE}Error: 脚本必须使用root权限${CEND}"; exit 1; }
-[ $1 = "" ] && echo "请为主机设置一个主机名，用法$0 HOSTNAME" && exit 1
+#[ -f init.sh ] && source init.sh || { echo "$red init.sh不存在" ; exit 1 ; }
 
-if [ -f /etc/redhat-release ];then
-	OS='centos_like'
-	if echo `uname -r` | grep 'el7' ;then
-		OS_VERSION='7'
-	elif echo `uname -r` | grep 'el8' ;then
-		OS_VERSION='8'
-	else
-		echo "脚本不再支持7以下版本"
-		exit 1
-	fi
-elif [ ! -z "`cat /etc/issue | grep -E 'bian|Ubuntu'`" ];then
-	OS='debian_like'
-else
-	echo "Not support OS, Please reinstall OS and retry!"
-	exit 1
-fi
-
+#[ $1 = "" ] && echo "$blue 请为主机设置一个主机名，用法$0 HOSTNAME" && exit 1
 
 sshd_reset
 bbr_start

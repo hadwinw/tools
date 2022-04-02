@@ -1,23 +1,12 @@
 #!/usr/bin/bash
-[ $(id -u) != "0" ] && { echo "${CFAILURE}Error: You must be root to run this script${CEND}"; exit 1; }
-[ -z $1 ] &&  echo "The script need a domain for caddy, eg: $0 DOMAIN" && exit 1;
+#[ -f init.sh ] && source init.sh || { echo "init.sh不存在，程序退出" ; exit 1; }
+[ -z $1 ] &&  echo "$(_red "The script need a domain for caddy, eg: "$0 DOMAIN"")" && exit 1;
 domain=$1
 
-if [ -f /etc/redhat-release ];then
-    pkg_install='yum install -y'
-	OS='centos_like'
-elif [ ! -z "`cat /etc/issue | grep -E 'bian|Ubuntu'`" ];then
-    pkg_install='apt install -y'
-	OS='debian_like'
-else
-    echo "Not support OS, Please reinstall OS and retry!"
-    exit 1
-fi
-
 function deps_install(){
-	if [ $OS = 'centos_like' ];then
+	if [ $os_like = 'rhel' ];then
 		$pkg_install curl emacs-nox  yum-plugin-copr tree
-	elif [ $OS = 'debian_like' ];then
+	elif [ $os_like = 'debian' ];then
 		apt update
 		$pkg_install curl emacs-nox debian-keyring debian-archive-keyring apt-transport-https tree
 	fi	
@@ -126,7 +115,7 @@ EOF
 
 xray_install(){
 	useradd -r -M -s `which nologin` xray
-	bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install
+	bash -c "$(curl -L  https://raw.githubusercontents.com/XTLS/Xray-install/main/install-release.sh)" @ install
 	sed -i 's@User=nobody@User=xray@g' /etc/systemd/system/xray.service
 	sed -i 's@User=nobody@User=xray@g' /etc/systemd/system/xray@.service
 	systemctl daemon-reload
@@ -209,10 +198,10 @@ EOF
 
 
 caddy_install(){
-	if [ $OS = 'centos_like' ];then
+	if [ $os_like = 'rhel' ];then
 		yum copr -y enable @caddy/caddy
 		$pkg_install caddy
-	elif [ $OS = 'debian_like' ];then
+	elif [ $os_like = 'debian' ];then
 		curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | tee /etc/apt/trusted.gpg.d/caddy-stable.asc
 		curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | tee /etc/apt/sources.list.d/caddy-stable.list
 		apt update
