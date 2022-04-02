@@ -33,7 +33,11 @@ function baisc_system_info(){
 	local_ip=`ip a | awk '/inet/' | awk '/global/ {printf $2"   " }'`	
 }
 
+<<<<<<< HEAD
 external_system_info(){
+=======
+function external_system_info(){
+>>>>>>> dev
 	external_ip=`curl -sL ipinfo.io/ip`
 	location=`curl -sL ipinfo.io/city`	
 }

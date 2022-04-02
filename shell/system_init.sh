@@ -36,7 +36,7 @@ EOF
 
 function bbr_start(){
 	if [ $os_like = 'rhel' -a $os_version = '7' ];then
-		yum install -y wget
+		$pkg_install wget
 		wget --no-check-certificate https://raw.githubusercontents.com/teddysun/across/master/bbr.sh && chmod +x bbr.sh && ./bbr.sh
 	else
 		cat >> /etc/sysctl.conf << EOF
@@ -67,11 +67,11 @@ EOF
 function disable_log(){
 	systemctl stop rsyslog
 	systemctl disable rsyslog
-	if [ $os_like = 'rhel' ];then
-		yum erase -y rsyslog* logrotate
+	if [ $os_like = 'rhel' ] ;then
+		$pkg_remove rsyslog* logrotate
 		### 暂时缺少centos版本噶journald关闭
 	else
-		apt purge -y rsyslog* logrotate
+		$pkg_remove rsyslog* logrotate
 		sed -i 's@#Storage=auto@Storage=none@g' /etc/systemd/journald.conf
 		systemctl restart systemd-journald.service
 	fi
@@ -81,17 +81,21 @@ function disable_log(){
 
 function remove_pkg(){
 	if [ $os_like = 'rhel' ];then
-		yum earse -y man-db exim4* vim vim-common vim-tiny
+		$pkg_remove man-db exim4* vim vim-common vim-tiny
 	else
-		apt purge -y man-db exim4* vim vim-common vim-tiny
+		$pkg_remove man-db exim4* vim vim-common vim-tiny
 		apt autopurge -y
 	fi
 }
 
+if [ -f $tempdir/system_info.sh ] ;then
+	source $tempdir/system_info.sh
+	os_info
+else
+	curl -sL https://gitlab.com/hadwinw/tools/-/raw/main/shell/system_info.sh  -o $tempdir/system_info.sh && source $tempdir/system_info.sh
+	os_info
+fi
 
-#[ -f init.sh ] && source init.sh || { echo "$red init.sh不存在" ; exit 1 ; }
-
-#[ $1 = "" ] && echo "$blue 请为主机设置一个主机名，用法$0 HOSTNAME" && exit 1
 
 sshd_reset
 bbr_start
