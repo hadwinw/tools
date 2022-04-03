@@ -20,7 +20,8 @@ backup_paths=('/etc/caddy' '/usr/share/caddy' '/etc/php' '/etc/mysql' \
 						   '/etc/ipsec.conf' '/etc/ipsec.secrets' \
 						   '/var/spool/cron/crontabs' \
 						   '/var/lib/pagermaid' '/etc/systemd/system/pagermaid.service' \
-						   '/etc/hosts'
+						   '/etc/hosts' \
+						   '/usr/local/freenom'
 			 )
 
 file_dir_exits(){

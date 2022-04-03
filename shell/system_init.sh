@@ -90,6 +90,10 @@ function remove_pkg(){
 	fi
 }
 
+function install_pkg(){
+	$pkg_install emacs-nox tree
+}
+
 if [ -f $tempdir/system_info.sh ] ;then
 	source $tempdir/system_info.sh
 	pkg_method
@@ -103,4 +107,5 @@ sshd_reset
 bbr_start
 emacs_init
 disable_log
+install_pkg
 remove_pkg

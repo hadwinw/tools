@@ -16,10 +16,10 @@ domain=$1
 function deps_install(){
 	pkg_method
 	if [ $os_like = 'rhel' ];then
-		$pkg_install curl emacs-nox  yum-plugin-copr tree
+		$pkg_install curl yum-plugin-copr
 	elif [ $os_like = 'debian' ];then
 		apt update
-		$pkg_install curl emacs-nox debian-keyring debian-archive-keyring apt-transport-https tree
+		$pkg_install curl debian-keyring debian-archive-keyring apt-transport-https
 	fi	
 }
 

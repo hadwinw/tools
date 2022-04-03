@@ -24,7 +24,7 @@ function main(){
 	echo "1. 调用system_init"
 	echo "2. 调用v2ray_xray_caddy_tls"
 	echo "3. 调用sergateClient"
-	echo "4. 安装pagermaid"
+	echo "4. 调用fscarmen的warp脚本"
 	echo "q. 退出脚本"
 }
 
@@ -58,7 +58,7 @@ do
 			echo "3"
 			;;
 		4)
-			echo "4"
+			curl -sL https://raw.githubusercontents.com/fscarmen/warp/main/menu.sh && bash menu.sh d
 			;;
 		'q')
 			echo "$(_blue 已清除临时文件.)" && rm -rf $tempdir
