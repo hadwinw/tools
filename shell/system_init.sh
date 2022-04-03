@@ -69,6 +69,8 @@ function disable_log(){
 	systemctl disable rsyslog
 	if [ $os_like = 'rhel' ] ;then
 		$pkg_remove rsyslog* logrotate
+		sed -i 's@#Storage=auto@Storage=none@g' /etc/systemd/journald.conf
+		systemctl restart systemd-journald.service
 		### 暂时缺少centos版本噶journald关闭
 	elif [ $os_like = 'debian' ] ;then
 		$pkg_remove rsyslog* logrotate

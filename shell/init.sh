@@ -37,7 +37,11 @@ do
 	case $choice in
 		0)
 			#dependence curl
-			curl -sL https://gitlab.com/hadwinw/tools/-/raw/main/shell/system_info.sh  -o $tempdir/system_info.sh && source $tempdir/system_info.sh
+			if [ -f $tempdir/system_info.sh ] ;then
+				source $tempdir/system_info.sh
+			else
+				curl -sL https://gitlab.com/hadwinw/tools/-/raw/main/shell/system_info.sh  -o $tempdir/system_info.sh && source $tempdir/system_info.sh
+			fi
 			system_info_print
 			;;
 		1)
