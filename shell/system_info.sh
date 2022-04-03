@@ -44,9 +44,13 @@ function os_get(){
 	[ -f /etc/lsb-release ] && awk -F'[="]+' '/DESCRIPTION/{print $2}' /etc/lsb-release && return
 }
 function os_like_get(){
-	if awk -F'[= "]' '/^ID=/{print $0}' /etc/os-release | grep -i -E 'centos|rhel|fedora' > /dev/null 2>&1 ;then
+   	if awk -F'[= "]' '/^ID_LIKE=/{print $0}' /etc/os-release | grep -i 'rhel' > /dev/null 2>&1 ;then
 		echo "rhel"
-	elif awk -F'[= "]' '/^ID=/{print $0}' /etc/os-release | grep -i -E 'debian|ubuntu|kali' > /dev/null 2>&1  ;then
+	elif awk -F'[= "]' '/^ID=/{print $0}' /etc/os-release | grep -i 'rhel' > /dev/null 2>&1 ;then
+		echo "rhel"
+   	elif awk -F'[= "]' '/^ID_LIKE=/{print $0}' /etc/os-release | grep -i 'debian' > /dev/null 2>&1 ;then
+		echo "debian"
+	elif awk -F'[= "]' '/^ID=/{print $0}' /etc/os-release | grep -i 'debian' > /dev/null 2>&1  ;then
 		echo "debian"
 	fi
 }
