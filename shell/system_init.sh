@@ -70,7 +70,7 @@ function disable_log(){
 	if [ $os_like = 'rhel' ] ;then
 		$pkg_remove rsyslog* logrotate
 		### 暂时缺少centos版本噶journald关闭
-	else
+	elif [ $os_like = 'debian' ] ;then
 		$pkg_remove rsyslog* logrotate
 		sed -i 's@#Storage=auto@Storage=none@g' /etc/systemd/journald.conf
 		systemctl restart systemd-journald.service
@@ -81,19 +81,19 @@ function disable_log(){
 
 function remove_pkg(){
 	if [ $os_like = 'rhel' ];then
-		$pkg_remove man-db exim4* vim vim-common vim-tiny
-	else
-		$pkg_remove man-db exim4* vim vim-common vim-tiny
+		$pkg_remove man-db exim4* vim vim-common vim-minimal postfix
+	elif [ $os_like = 'debian' ]; then
+		$pkg_remove man-db exim4* vim vim-common vim-tiny postfix
 		apt autopurge -y
 	fi
 }
 
 if [ -f $tempdir/system_info.sh ] ;then
 	source $tempdir/system_info.sh
-	os_info
+	pkg_method
 else
 	curl -sL https://gitlab.com/hadwinw/tools/-/raw/main/shell/system_info.sh  -o $tempdir/system_info.sh && source $tempdir/system_info.sh
-	os_info
+	pkg_method
 fi
 
 
