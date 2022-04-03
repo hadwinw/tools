@@ -44,13 +44,13 @@ function os_get(){
 	[ -f /etc/lsb-release ] && awk -F'[="]+' '/DESCRIPTION/{print $2}' /etc/lsb-release && return
 }
 function os_like_get(){
-	[ -f /etc/os-release ] && os_like=`awk -F'[= "]' '/^ID=/{print $2}' /etc/os-release`
-	if [ $os_like = 'debian' ] ;then
-		echo $os_like
-	else 
-		awk -F'[= "]' '/ID_LIKE/{print $2}' /etc/os-release && return
+	if awk -F'[= "]' '/^ID=/{print $0}' /etc/os-release | grep -i -E 'centos|rhel|fedora' > /dev/null 2>&1 ;then
+		echo "rhel"
+	elif awk -F'[= "]' '/^ID=/{print $0}' /etc/os-release | grep -i -E 'debian|ubuntu|kali' > /dev/null 2>&1  ;then
+		echo "debian"
 	fi
 }
+
 function os_version_get(){
 	[ -f /etc/os-release ] && awk -F'[= "]' '/VERSION_ID/{print $3}' /etc/os-release && return
 }
