@@ -62,8 +62,8 @@ do
 			curl -sL https://raw.githubusercontents.com/fscarmen/warp/main/menu.sh && bash menu.sh d
 			;;
 		5)
-			#curl -sL https://gitlab.com/hadwinw/tools/-/raw/main/shell/pkt_mine.sh && bash pkt_mine.sh
-			bash pkt_mine.sh
+			curl -sL https://gitlab.com/hadwinw/tools/-/raw/main/shell/pkt_mine.sh && bash pkt_mine.sh
+			#bash pkt_mine.sh
 			;;
 		'q')
 			echo "$(_blue 已清除临时文件.)" && rm -rf $tempdir
