@@ -25,6 +25,7 @@ function main(){
 	echo "2. 调用v2ray_xray_caddy_tls"
 	echo "3. 调用sergateClient"
 	echo "4. 调用fscarmen的warp脚本"
+	echo "5. pkt.cash挖矿"
 	echo "q. 退出脚本"
 }
 
@@ -59,6 +60,10 @@ do
 			;;
 		4)
 			curl -sL https://raw.githubusercontents.com/fscarmen/warp/main/menu.sh && bash menu.sh d
+			;;
+		5)
+			#curl -sL https://gitlab.com/hadwinw/tools/-/raw/main/shell/pkt_mine.sh && bash pkt_mine.sh
+			bash pkt_mine.sh
 			;;
 		'q')
 			echo "$(_blue 已清除临时文件.)" && rm -rf $tempdir
