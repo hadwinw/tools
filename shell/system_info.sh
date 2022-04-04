@@ -35,7 +35,7 @@ _blue() {
 # }
 
 
-function baisc_system_info(){
+function basic_system_info(){
 	cpu_name=$( awk -F: '/model name/ {name=$2} END {print name}' /proc/cpuinfo | sed 's/^[ \t]*//;s/[ \t]*$//' )
 	cpu_count=$( awk -F: '/processor/ {core++} END {print core}' /proc/cpuinfo )
 	#freq=$( awk -F'[ :]' '/cpu MHz/ {print $4;exit}' /proc/cpuinfo )
@@ -103,7 +103,7 @@ function dependence(){
 
 
 function system_info_print(){
-	baisc_system_info
+	basic_system_info
 	os_info
 	external_system_info
 	echo "cpu               :  $(_green "$cpu_name")"
