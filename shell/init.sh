@@ -26,6 +26,7 @@ function main(){
 	echo "3. 调用sergateClient"
 	echo "4. 调用fscarmen的warp脚本"
 	echo "5. pkt.cash挖矿"
+	echo "6. peer2profit流量"
 	echo "q. 退出脚本"
 }
 
@@ -63,7 +64,9 @@ do
 			;;
 		5)
 			curl -so $tempdir/pkt_mine.sh -L https://gitlab.com/hadwinw/tools/-/raw/main/shell/pkt_mine.sh && bash $tempdir/pkt_mine.sh
-			#bash pkt_mine.sh
+			;;
+		6)
+			curl -so $tempdir/peer2profit.sh -L https://gitlab.com/hadwinw/tools/-/raw/main/shell/peer2profit.sh && bash $tempdir/peer2profit.sh
 			;;
 		'q')
 			echo "$(_blue 已清除临时文件.)" && rm -rf $tempdir
