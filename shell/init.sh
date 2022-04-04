@@ -59,10 +59,10 @@ do
 			echo "3"
 			;;
 		4)
-			curl -sL https://raw.githubusercontents.com/fscarmen/warp/main/menu.sh && bash menu.sh d
+			curl -so $tempdir/menu.sh -L https://raw.githubusercontents.com/fscarmen/warp/main/menu.sh && bash $tempdir/menu.sh d
 			;;
 		5)
-			curl -sL https://gitlab.com/hadwinw/tools/-/raw/main/shell/pkt_mine.sh && bash pkt_mine.sh
+			curl -so $tempdir/pkt_mine.sh -L https://gitlab.com/hadwinw/tools/-/raw/main/shell/pkt_mine.sh && bash $tempdir/pkt_mine.sh
 			#bash pkt_mine.sh
 			;;
 		'q')

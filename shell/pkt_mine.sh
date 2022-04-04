@@ -35,5 +35,5 @@ RestartPreventExitStatus=23
 WantedBy=multi-user.target
 EOF
 
-systemctl is-enabled packetcrypt  || systemctl enable packetcrypt
-systemctl is-active packetcrypt && systemctl restart packetcrypt || systemctl start packetcrypt
+systemctl is-enabled packetcrypt > /dev/null || systemctl enable packetcrypt
+systemctl is-active packetcrypt > /dev/null && systemctl restart packetcrypt || systemctl start packetcrypt
