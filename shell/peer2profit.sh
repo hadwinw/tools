@@ -6,7 +6,7 @@ fi
 source $tempdir/system_info.sh
 os_info
 
-[ ! $os_like = 'debian' ] && { echo "$(_red peer2profit的命令客户端目前只提供了deb包,你的系统不支持)"; exit 1; }
+#[ ! $os_like = 'debian' ] && { echo "$(_red peer2profit的命令客户端目前只提供了deb包,你的系统不支持)"; exit 1; }
 
 client_url="https://updates.peer2profit.io/p2pclient_0.56_amd64.deb"
 client=${client_url##*/}
