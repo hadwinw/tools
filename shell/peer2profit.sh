@@ -10,9 +10,19 @@ os_info
 
 client_url="https://updates.peer2profit.io/p2pclient_0.56_amd64.deb"
 client=${client_url##*/}
+curl -so $tempdir/$client -L $client_url
 
-curl -so $tempdir/$client -L $client_url 
-apt install $tempdir/$client
+pkg_method
+if [ $os_like = 'rhel' ]; then
+	$pkg_install alien
+	cd $tempdir
+	alien -r $client
+	################怎么可以使用pkg_install方式呢
+	rpm -ivh p2pclient*.rpm
+	cd -
+else
+	$pkg_install $tempdir/$client
+fi
 
 
 run_user=p2pclient

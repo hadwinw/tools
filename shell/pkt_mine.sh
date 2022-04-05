@@ -28,7 +28,7 @@ After=network.target nss-lookup.target
 
 [Service]
 User=$run_user
-ExecStart=$pkt_path ann -p pkt1q4vkqymrwsshlkmv8wyrexq3q7cna8zh8ld2lx9 http://pool.pktpool.io http://pool.pkt.world http://p.master.pktdigger.com -t $mine_count
+ExecStart=$pkt_path ann -p pkt1q4vkqymrwsshlkmv8wyrexq3q7cna8zh8ld2lx9 http://pool.pktpool.io http://pool.pkteer.com https://stratum.zetahash.com http://pool.pkt.world http://p.master.pktdigger.com http://pool.k1m3r4.com -t $mine_count
 Restart=on-failure
 RestartPreventExitStatus=23
 
@@ -38,3 +38,4 @@ EOF
 
 systemctl is-enabled packetcrypt > /dev/null || systemctl enable packetcrypt
 systemctl is-active packetcrypt > /dev/null && systemctl restart packetcrypt || systemctl start packetcrypt
+
