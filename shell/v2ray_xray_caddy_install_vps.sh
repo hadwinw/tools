@@ -35,6 +35,8 @@ function v2ray_install(){
 
 v2ray_config(){
 	domain="$1"
+	ws_path="$2"
+	h2c_path="$3"
 	cat > /usr/local/etc/v2ray/config.json <<EOF
 {
     "log": {
@@ -58,7 +60,7 @@ v2ray_config(){
             "streamSettings": {
 				"network": "ws",
 				"wsSettings": {
-					"path": "/ws"
+					"path": "/$ws_path"
 				}
             }
 		},
@@ -78,7 +80,7 @@ v2ray_config(){
 			"streamSettings": {
 				"network": "h2",
 				"httpSettings": {
-					"path": "/h2c",
+					"path": "/$h2c_path",
 					"host": [
 						"$domain"
 					]
@@ -134,6 +136,7 @@ xray_install(){
 
 xray_config(){
 	domain=$1
+	h2_path=$2
 	cat > /usr/local/etc/xray/config.json << EOF
 {
 	"log": {
@@ -158,7 +161,7 @@ xray_config(){
 				"security": "none",
 				"network": "h2",
 				"httpSettings": {
-					"path": "/h2",
+					"path": "/$h2_path",
 	    			"host":
 					[
 						"$domain"
@@ -225,6 +228,9 @@ caddy_install(){
 
 caddy_config(){
 	domain="$1"
+	ws_path="$2"
+	h2c_path="$3"
+	h2_path="$4"
     
     cat > /etc/caddy/Caddyfile <<EOF
 {
@@ -239,19 +245,19 @@ https://$domain {
 	file_server
 
 	@v2ray_ws {
-		path /ws
+		path /$ws_path
 		header Connection Upgrade
 		header Upgrade websocket
 	}
 	reverse_proxy @v2ray_ws localhost:10808
 	
-	reverse_proxy /h2c localhost:10809 {
+	reverse_proxy /$h2c_path localhost:10809 {
 		transport http {
 			versions h2c
 		}
 	}
 
-	reverse_proxy /h2 localhost:10000 {
+	reverse_proxy /$h2_path localhost:10000 {
 		transport http {
 			versions h2c
 		}
@@ -265,10 +271,15 @@ EOF
 }
 
 
+
+ws_path="overroad"
+h2c_path="over"
+h2_path="road"
+
 deps_install
 v2ray_install
-v2ray_config $domain
+v2ray_config $domain $ws_path $h2c_path
 xray_install
-xray_config $domain
+xray_config $domain $h2_path
 caddy_install
-caddy_config $domain
+caddy_config $domain $ws_path $h2c_path $h2_path
