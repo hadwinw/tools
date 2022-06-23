@@ -101,6 +101,10 @@ function dependence(){
 	$pkg_install $1
 }
 
+function service_control(){
+	systemctl is-enabled $1 > /dev/null || systemctl enable $1
+	systemctl is-active $1 > /dev/null && systemctl restart $1 || systemctl start $1
+}
 
 function system_info_print(){
 	basic_system_info

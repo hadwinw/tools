@@ -33,6 +33,10 @@ EOF
 	systemctl restart sshd
 }
 
+function timesync(){
+	$pkg_install systemd-timesyncd
+	service_control systemd-timesyncd
+}
 
 function bbr_start(){
 	if [ $os_like = 'rhel' -a $os_version = '7' ];then
@@ -94,6 +98,8 @@ function install_pkg(){
 	$pkg_install emacs-nox tree
 }
 
+
+
 if [ -f $tempdir/system_info.sh ] ;then
 	source $tempdir/system_info.sh
 	pkg_method
@@ -104,6 +110,7 @@ fi
 
 
 sshd_reset
+timesync
 bbr_start
 emacs_init
 disable_log

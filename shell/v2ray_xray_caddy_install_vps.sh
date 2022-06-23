@@ -55,7 +55,8 @@ v2ray_config(){
 						"id": "0fd36365-2d5d-45c9-a5dc-6bba190cd536",
 						"alterId": 0
 					}
-				]
+				],
+				"decryption":"none"
             },
             "streamSettings": {
 				"network": "ws",
@@ -75,7 +76,8 @@ v2ray_config(){
 						"id": "0fd36365-2d5d-45c9-a5dc-6bba190cd536",
 						"alterId": 0
 					}
-				]
+				],
+				"decryption":"none"
 			},
 			"streamSettings": {
 				"network": "h2",
@@ -121,8 +123,7 @@ v2ray_config(){
 }
 EOF
 	
-	systemctl restart v2ray
-	systemctl enable v2ray
+	service_control v2ray
 }
 
 
@@ -206,8 +207,7 @@ xray_config(){
 
 EOF
 	
-	systemctl restart xray
-	systemctl enable xray
+	service_control xray
 }
 
 
@@ -266,8 +266,7 @@ https://$domain {
 }
 EOF
 
-    systemctl restart caddy
-	systemctl enable caddy
+    service_control caddy
 }
 
 
