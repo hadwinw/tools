@@ -217,7 +217,7 @@ caddy_install(){
 		yum copr -y enable @caddy/caddy
 		$pkg_install caddy
 	elif [ $os_like = 'debian' ];then
-		curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | tee /etc/apt/trusted.gpg.d/caddy-stable.asc
+		curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
 		curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt' | tee /etc/apt/sources.list.d/caddy-stable.list
 		apt update
 		$pkg_install caddy
